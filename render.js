@@ -1,8 +1,7 @@
-
 const fs=require('fs');
 const path=require('path');
 const env=require('./tools/env');
-const {probeDuration,analyzeAudio,muxArgs}=require('./tools/audio');
+const {probeDuration,analyzeAudio}=require('./tools/audio');
 const {setupPage}=require('./tools/browser');
 const {spawnEncoder}=require('./tools/encoder');
 const {findAssets}=require('./tools/assets');
@@ -23,7 +22,7 @@ async function main(){
   const {page,browser}=await setupPage(cfg, assets, raw, projectJson, scenesJson, audioDur);
   const total=await page.evaluate(()=> window.PV.timeline.total);
   const lastEnd=await page.evaluate(()=> window.PV.timeline.lastEnd);
-  console.log(`Duration computed total=${total} audioDur=${audioDur} lastEnd=${lastEnd} tail=${projectJson.endPad||2}`);
+  console.log(`Duration total=${total} audioDur=${audioDur} lastEnd=${lastEnd} tail=${projectJson.endPad||2}`);
   if(audioDur>0 && Math.abs(audioDur-lastEnd)>1){
     console.log(`::warning::Audio ${audioDur}s vs last timestamp ${lastEnd}s diff >1s total chosen ${total}`);
   }
@@ -32,23 +31,20 @@ async function main(){
   const duration=end-start;
   const frames=Math.ceil(duration*cfg.fps);
   console.log(`Rendering ${frames} frames from ${start} to ${end} duration ${duration}`);
-  // audio envelope
   let envelope=null;
   if(assets.audio){
     envelope=await analyzeAudio(assets.audio, cfg.fps, duration, start);
-    await page.evaluate((env,fps)=>{ window.setAudio(env,fps); }, envelope, cfg.fps);
+    await page.evaluate(({env,fps})=>{ window.setAudio(env,fps); }, {env:envelope,fps:cfg.fps});
   } else {
-    await page.evaluate((_,fps)=>{ window.setAudio(null,fps); }, null, cfg.fps);
+    await page.evaluate(({env,fps})=>{ window.setAudio(env,fps); }, {env:null,fps:cfg.fps});
   }
-  // ensure fonts
   await page.evaluate(async()=>{ await document.fonts.ready; });
-  // encoder
   const outDir=path.dirname(cfg.out);
   if(!fs.existsSync(outDir)) fs.mkdirSync(outDir,{recursive:true});
   const ff=spawnEncoder(cfg.out, cfg.fps, duration, assets.audio? {audio:assets.audio,start,volume:cfg.audioVolume,fadeOut:cfg.fadeOut,endPad:projectJson.endPad,total:total,audioDur}: null);
   for(let i=0;i<frames;i++){
     const t=start + i/cfg.fps;
-    await page.evaluate((tt)=> window.seek(tt), t);
+    await page.evaluate(({tt})=> window.seek(tt), {tt:t});
     const buf=await page.screenshot({type:'jpeg',quality:95});
     const ok=ff.stdin.write(buf);
     if(!ok) await new Promise(r=>ff.stdin.once('drain',r));
