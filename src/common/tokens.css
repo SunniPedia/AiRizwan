@@ -1,0 +1,12 @@
+
+:root{
+ --bg:#04210f; --bg-mid:#0a4a2a; --bg-dark:#020f07;
+ --accent:#14804a; --gold:#e9c46a; --gold-dark:#c9973a; --cream:#fff8e6;
+ --mood-respectful:rgb(233,196,106); --mood-happy:rgb(255,190,90);
+ --mood-informative:rgb(60,200,170); --mood-excited:rgb(170,230,80);
+ --mood-calm:rgb(110,170,255); --mood-enthusiastic:rgb(255,160,70);
+}
+@font-face{ font-family:'SolaimanLipi'; src:url('../../assets/fonts/SolaimanLipi-Regular.ttf') format('truetype'); font-display:block; font-weight:400; }
+@font-face{ font-family:'SolaimanLipi'; src:url('../../assets/fonts/SolaimanLipi-Bold.ttf') format('truetype'); font-display:block; font-weight:700; }
+@font-face{ font-family:'Noto Serif'; src:local('Noto Serif'); }
+body{ margin:0; background:var(--bg-dark); font-family:'SolaimanLipi','Noto Serif',serif; }
