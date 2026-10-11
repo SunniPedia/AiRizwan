@@ -1,0 +1,96 @@
+name: Render Video
+on:
+  workflow_dispatch:
+    inputs:
+      theme:
+        description: 'Theme'
+        required: true
+        default: 'podcast'
+        type: choice
+        options: [podcast, infographic, both]
+      quality:
+        description: 'Quality'
+        required: true
+        default: 'preview'
+        type: choice
+        options: [preview, full]
+      audio_volume:
+        description: 'Audio volume'
+        default: '1.0'
+        type: string
+      tail_seconds:
+        description: 'Tail seconds after audio'
+        default: '2'
+        type: string
+      start:
+        description: 'Start seconds (optional)'
+        default: ''
+        type: string
+      end:
+        description: 'End seconds (optional)'
+        default: ''
+        type: string
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install ffmpeg and fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-noto-core fonts-noto-extra fonts-noto-cjk
+          fc-cache -f
+      - name: Download SolaimanLipi if needed
+        run: |
+          if grep -q SolaimanLipi config/project.json; then
+            if [ ! -f assets/fonts/SolaimanLipi-Regular.ttf ]; then
+              mkdir -p assets/fonts
+              echo "Attempting to download SolaimanLipi..."
+              curl -L -o assets/fonts/SolaimanLipi-Regular.ttf https://fonts.maateen.me/solaiman-lipi/solaimanlipi-normal-v1.0.ttf || echo "::warning::SolaimanLipi download failed, upload TTF manually"
+              curl -L -o assets/fonts/SolaimanLipi-Bold.ttf https://fonts.maateen.me/solaiman-lipi/solaimanlipi-bold-v1.0.ttf || true
+              if [ ! -s assets/fonts/SolaimanLipi-Regular.ttf ]; then rm -f assets/fonts/SolaimanLipi-Regular.ttf; echo "::warning::SolaimanLipi file missing, please upload assets/fonts/SolaimanLipi-Regular.ttf manually"; fi
+            fi
+          fi
+      - name: Install deps
+        run: npm install
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+      - name: Check repo
+        run: node tools/check-repo.js
+      - name: Render podcast
+        if: ${{ inputs.theme == 'podcast' || inputs.theme == 'both' }}
+        env:
+          THEME: podcast
+          WIDTH: ${{ inputs.quality == 'full' && '1920' || '960' }}
+          FPS: ${{ inputs.quality == 'full' && '30' || '15' }}
+          AUDIO_VOLUME: ${{ inputs.audio_volume }}
+          END_PAD: ${{ inputs.tail_seconds }}
+          START: ${{ inputs.start }}
+          END: ${{ inputs.end }}
+          OUT: out/video-podcast.mp4
+        run: node render.js
+      - name: Render infographic
+        if: ${{ inputs.theme == 'infographic' || inputs.theme == 'both' }}
+        env:
+          THEME: infographic
+          WIDTH: ${{ inputs.quality == 'full' && '1080' || '540' }}
+          FPS: ${{ inputs.quality == 'full' && '30' || '15' }}
+          AUDIO_VOLUME: ${{ inputs.audio_volume }}
+          END_PAD: ${{ inputs.tail_seconds }}
+          START: ${{ inputs.start }}
+          END: ${{ inputs.end }}
+          OUT: out/video-infographic.mp4
+        run: node render.js
+      - name: Log durations
+        run: |
+          for f in out/*.mp4; do if [ -f "$f" ]; then echo "File $f"; ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 "$f" || true; fi; done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: video
+          path: out/*.mp4
+          retention-days: 14
