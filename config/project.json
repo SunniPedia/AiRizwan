@@ -1,1 +1,76 @@
-
+{
+  "theme": "both",
+  "brandName": "ইসলামী বিশ্বকোষ ও আল হাদিস S2",
+  "tagline": "",
+  "language": "bn",
+  "direction": "ltr",
+  "digits": "bengali",
+  "grouping": "lakh",
+  "colors": {
+    "bg": "#04210f",
+    "bgMid": "#0a4a2a",
+    "bgDark": "#020f07",
+    "accent": "#14804a",
+    "gold": "#e9c46a",
+    "goldDark": "#c9973a",
+    "cream": "#fff8e6",
+    "mood": {
+      "respectful": [
+        233,
+        196,
+        106
+      ],
+      "happy": [
+        255,
+        190,
+        90
+      ],
+      "informative": [
+        60,
+        200,
+        170
+      ],
+      "excited": [
+        170,
+        230,
+        80
+      ],
+      "calm": [
+        110,
+        170,
+        255
+      ],
+      "enthusiastic": [
+        255,
+        160,
+        70
+      ]
+    }
+  },
+  "fonts": {
+    "main": "SolaimanLipi",
+    "latin": "Noto Serif",
+    "arabic": "Noto Naskh Arabic",
+    "bengali": "SolaimanLipi"
+  },
+  "logo": {
+    "file": "assets/logo.png",
+    "shape": "rounded",
+    "background": "white"
+  },
+  "storeTarget": "google-play",
+  "greetingText": "আসসালামু আলাইকুম",
+  "host": {
+    "skin": "#c49a6c",
+    "hair": "#1a1a1a",
+    "cap": "no",
+    "beard": "short",
+    "glasses": "no",
+    "clothes": "#d6eaf8",
+    "stripes": "true",
+    "headphones": "#2c2c2c",
+    "mic": "#444",
+    "faceless": "no"
+  },
+  "endPad": 2.0
+}

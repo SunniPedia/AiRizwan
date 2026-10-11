@@ -1,0 +1,193 @@
+[
+  {
+    "line": 1,
+    "match": "আসসালামু আলাইকুম",
+    "type": "greeting"
+  },
+  {
+    "line": 2,
+    "match": "ইলমে দ্বিন অর্জনের এক",
+    "type": "brand"
+  },
+  {
+    "line": 3,
+    "match": "এতে পাবেন আল কুরআনের",
+    "type": "cards",
+    "items": [
+      {
+        "label": "কানযুল ঈমান",
+        "icon": "book"
+      },
+      {
+        "label": "ইরফানুল কুরআন",
+        "icon": "open-book"
+      }
+    ]
+  },
+  {
+    "line": 4,
+    "match": "সাথে সম্পূর্ণ তাফসীরে",
+    "type": "cards",
+    "items": [
+      {
+        "label": "তাফসীরে মাযহারী",
+        "icon": "library-shelf"
+      }
+    ]
+  },
+  {
+    "line": 5,
+    "match": "তাফসীরে খাযাইনুল ইরফ",
+    "type": "cards",
+    "items": [
+      {
+        "label": "আটটি তাফসির",
+        "icon": "book"
+      }
+    ]
+  },
+  {
+    "line": 6,
+    "match": "পঁয়তাল্লিশটি হাদিস গ্",
+    "type": "numbers",
+    "numbers": [
+      {
+        "value": 45,
+        "label": "হাদিস গ্রন্থ"
+      },
+      {
+        "value": 270335,
+        "label": "হাদিস"
+      }
+    ]
+  },
+  {
+    "line": 7,
+    "match": "আটশত এর বেশি অফলাইন",
+    "type": "numbers",
+    "numbers": [
+      {
+        "value": 800,
+        "label": "অফলাইন কিতাব",
+        "plus": true
+      }
+    ]
+  },
+  {
+    "line": 8,
+    "match": "এক হাজারের বেশি অনলাইন",
+    "type": "numbers",
+    "numbers": [
+      {
+        "value": 1000,
+        "label": "অনলাইন পিডিএফ",
+        "plus": true
+      }
+    ]
+  },
+  {
+    "line": 9,
+    "match": "লেখক ও বিষয়ভিত্তিক সু",
+    "type": "cards",
+    "items": [
+      {
+        "label": "লেখক ভিত্তিক",
+        "icon": "name-tag"
+      },
+      {
+        "label": "বিষয়ভিত্তিক",
+        "icon": "grid"
+      }
+    ]
+  },
+  {
+    "line": 10,
+    "match": "নামাজের সময়, সেহরি ইফ",
+    "type": "cards",
+    "items": [
+      {
+        "label": "নামাজের সময়",
+        "icon": "clock"
+      },
+      {
+        "label": "সেহরি ইফতার",
+        "icon": "calendar"
+      }
+    ]
+  },
+  {
+    "line": 11,
+    "match": "কিবলা কম্পাস, মসজিদ খ",
+    "type": "cards",
+    "items": [
+      {
+        "label": "কিবলা কম্পাস",
+        "icon": "compass"
+      },
+      {
+        "label": "মসজিদ খুঁজি",
+        "icon": "mosque"
+      }
+    ]
+  },
+  {
+    "line": 12,
+    "match": "ডিজিটাল তাসবিহ সব কিছ",
+    "type": "cards",
+    "items": [
+      {
+        "label": "ডিজিটাল তাসবিহ",
+        "icon": "prayer-beads"
+      }
+    ]
+  },
+  {
+    "line": 13,
+    "match": "আরও রয়েছে বয়ান, নাত,",
+    "type": "cards",
+    "items": [
+      {
+        "label": "বয়ান",
+        "icon": "microphone"
+      },
+      {
+        "label": "নাত",
+        "icon": "music-note"
+      }
+    ]
+  },
+  {
+    "line": 14,
+    "match": "মাসনুন দোয়া, ইসলামিক ন",
+    "type": "cards",
+    "items": [
+      {
+        "label": "মাসনুন দোয়া",
+        "icon": "open-hand"
+      },
+      {
+        "label": "ইসলামিক নাম",
+        "icon": "name-tag"
+      },
+      {
+        "label": "লাইভ হারামাইন",
+        "icon": "video-frame"
+      }
+    ]
+  },
+  {
+    "line": 15,
+    "match": "আজই প্লে স্টোর থেকে ইনস",
+    "type": "store"
+  },
+  {
+    "line": 16,
+    "match": "নিজে পড়ুন, অন্যকে পড়ার",
+    "type": "closing",
+    "icons": [
+      "open-book",
+      "heart",
+      "share"
+    ]
+  }
+]
